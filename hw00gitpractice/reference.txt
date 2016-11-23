@@ -1,11 +1,20 @@
+git config --global user.name <"name">
+Set username.
+
+git config --global user.email <email>
+Set email.
+
 git status
 Shows what files are to be committed.
 
 git add -A
-Adds files to be committed.
+Adds all files to be committed.
 
-git commit -m ""
+git commit -m <"comment">
 Commits files with a comment.
 
 git push
 Wow push!
+
+git checkout <SHA> <filename>
+Revert to older version.
