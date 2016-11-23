@@ -1,4 +1,11 @@
-git config --status
+git status
+Shows what files are to be committed.
+
 git add -A
+Adds files to be committed.
+
 git commit -m ""
+Commits files with a comment.
+
 git push
+Wow push!
