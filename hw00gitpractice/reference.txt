@@ -4,6 +4,9 @@ Set username.
 git config --global user.email <email>
 Set email.
 
+git config --core.editor <editor>
+Sets default editor.
+
 git status
 Shows what files are to be committed.
 
