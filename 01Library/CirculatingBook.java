@@ -22,11 +22,13 @@ public class CirculatingBook extends LibraryBook {
     }
 
     public void checkout(String patron, String due) {
+	System.out.println("Successfully checked out" + this);
 	currentHolder = patron;
 	dueDate = due;
     }
 
     public void returned() {
+	System.out.println("succesfsklfjskl");
 	currentHolder = null;
 	dueDate = null;
     }
