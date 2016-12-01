@@ -35,19 +35,19 @@ public class CirculatingBook extends LibraryBook {
 
     public String circulationStatus() {
 	try {
-	    System.out.println(currentHolder + ", " + dueDate);
+	    return currentHolder + ", " + dueDate;
 	}
-	catch (NullReferenceException e) {
-	    System.out.println("Book available on shelves");
+	catch (NullPointerException e) {
+	    return "Book available on shelves";
 	}
     }
 
     public String toString() {
 	try {
-	    System.out.println(super.toString() + ", " + currentHolder + ", " + dueDate);
+	    return super.toString() + ", " + currentHolder + ", " + dueDate;
 	}
-	catch (NullReferenceException e) {
-	    System.out.println(super.toString());x
+	catch (NullPointerException e) {
+	    return super.toString();
 	}
     }
 }
