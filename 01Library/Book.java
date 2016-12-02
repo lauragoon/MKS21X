@@ -4,9 +4,9 @@ public class Book {
   private String isbn;
 
   public Book(){
-    author = "Laura Goon";
-    title = "A Dying Third-Term Junior";
-    isbn = "00123456789";
+    author = "";
+    title = "";
+    isbn = "";
   }
 
   public Book(String auth, String name, String code) {
