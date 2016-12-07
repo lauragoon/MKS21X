@@ -1,0 +1,13 @@
+public class Barcode implements Comparable<Barcode>{
+    // instance variables
+    private String _zip;
+    private int _checkDigit;
+
+    // constructors
+    // precondition: _zip.length() = 5 and zip contains only digits
+    // postcondition: throws a runtime exception zip is not the correct
+    //                or zip contains a non digit
+    //                _zip and _checkDigit are initialized
+    public Barcode(String zip){
+    }
+}
