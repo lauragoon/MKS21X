@@ -39,42 +39,54 @@ public class Barcode implements Comparable<Barcode>{
     return sum;
   }
 
+  // postcondition: convert bar string to num string
+  public String toZip(Sting zip){
+      String ret = "";
+      for (int i = 0; i < zip.length(); i++) {
+	  switch (zip[i]){
+	      case
+	  }
+      }
+  }
+
   // helper function!
   // postcondition: convert num string to bar string
-  public String convert(String num){
+  public String toCode(String num){
     String ret = "";
-    switch (num){
-      case "1":
-        ret = ":::||";
+    for (int i = 0; i < num.length(); i++) {
+
+    switch (num[i]){
+    case "1":
+        ret+ = ":::||";
         break;
-      case "2":
-        ret = "::|:|";
+    case "2":
+        ret+ = "::|:|";
         break;
-      case "3":
-        ret = "::||:";
+    case "3":
+        ret+ = "::||:";
         break;
-      case "4":
-        ret = ":|::|";
+    case "4":
+        ret+= ":|::|";
         break;
-      case "5":
-        ret = ":|:|:";
+    case "5":
+        ret+= ":|:|:";
         break;
-      case "6":
-        ret = ":||::";
+    case "6":
+        ret+= ":||::";
         break;
-      case "7":
-        ret = "|:::|";
+    case "7":
+        ret+= "|:::|";
         break;
-      case "8":
-        ret = "|::|:";
+    case "8":
+        ret+= "|::|:";
         break;
-      case "9":
-        ret = "|:|::";
+    case "9":
+        ret += "|:|::";
         break;
-      case "0":
-        ret = "||:::";
+    case "0":
+        ret += "||:::";
         break;
-      default:
+    default:
         break;
     }
     return ret;
@@ -86,10 +98,11 @@ public class Barcode implements Comparable<Barcode>{
     String code = "";
     String digit = Integer.toString(checkSum()%10);
     String zip_ = _zip + digit;
-    for (int i = 0; i < zip_.length(); i++){
+    //for (int i = 0; i < zip_.length(); i++){
       //code += zip_.substring(i,i+1);
-      code += convert(zip_.substring(i,i+1));
-    }
+      //code += convert(zip_.substring(i,i+1));
+    //}
+    code = toBar(zip_);
     return zip_ + "  " + "|" + code + "|";
   }
 
