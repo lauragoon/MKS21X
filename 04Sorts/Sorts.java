@@ -4,10 +4,7 @@ public class Sorts{
     return "06.Goon.Laura";
   }
 
-  /**Selection sort of an int array.
-  *Upon completion, the elements of the array will be in increasing order.
-  *@param data the elements to be sorted.
-  */
+
   public static void selectionSort(int[] data){
     int temp;
     for (int counter = 0; counter < data.length; counter++){
@@ -21,5 +18,30 @@ public class Sorts{
       data[counter] = data[champ];
       data[champ] = temp;
   }
+
+    public static void insertionSort(int[] data){
+	// int[] temp = new int[data.length];
+        boolean sorted = false;
+	int counter = 1;
+	int insert;
+	int temp;
+	while !(sorted){
+		for (int i = counter-1; i >= 0; i--){
+		    if (data[i] < data[counter]){
+			insert = i;
+			break;
+		    } else if (insert != null){
+			insert = null;
+		    }
+		}
+		if (insert != null){
+		    // gotta move out everything....
+		    for (int i = data.length-1; i >= insert; i--) {
+			// actually move now
+		    }
+		}
+		
+        }
+    }
 
 }
