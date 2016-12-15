@@ -33,5 +33,32 @@ public class Sorts{
       }
     }
 
+    public static void bubbleSort(int[] data){
+	boolean notSorted = true;
+	boolean swapped = false;
+	int temp;
+	while (notSorted){
+	    for (int i = 0; i < data.length-1; i++){
+		if (data[i] > data[i+1]){
+		    temp = data[i];
+		    data[i] = data[i+1];
+		    data[i+1] = temp;
+		    swapped = true;
+		}
+	    }
+	    if (swapped == false){
+		notSorted = false;
+	    } else {
+		swapped = false;
+	    }
+	}
+    }
+
+
+    public static void main(String[] args){
+	int[] test = {3,5,3,2,10,2,333,4,56,4,365};
+	bubbleSort(test);
+	System.out.println(Arrays.toString(test));
+    }
 
 }
