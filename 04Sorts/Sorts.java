@@ -1,9 +1,10 @@
+import java.util.Arrays;
+
 public class Sorts{
 
   public static String name(){
     return "06.Goon.Laura";
   }
-
 
   public static void selectionSort(int[] data){
     int temp;
@@ -17,31 +18,20 @@ public class Sorts{
       temp = data[counter];
       data[counter] = data[champ];
       data[champ] = temp;
+    }
   }
 
     public static void insertionSort(int[] data){
-	// int[] temp = new int[data.length];
-        boolean sorted = false;
-	int counter = 1;
-	int insert;
-	int temp;
-	while !(sorted){
-		for (int i = counter-1; i >= 0; i--){
-		    if (data[i] < data[counter]){
-			insert = i;
-			break;
-		    } else if (insert != null){
-			insert = null;
-		    }
-		}
-		if (insert != null){
-		    // gotta move out everything....
-		    for (int i = data.length-1; i >= insert; i--) {
-			// actually move now
-		    }
-		}
-		
+      int counter;
+      for (int i = 1; i < data.length; i++){
+        counter = data[i];
+        int j;
+        for (j = i-1; (j >= 0)&&(counter < data[j]); j--){
+          data[j+1] = data[j];
         }
+        data[j+1] = counter;
+      }
     }
+
 
 }
