@@ -1,4 +1,16 @@
-public class TempConv{
+public class TempConv extends JFrame implements ActionListener{
+    private Container pane;
+    private 
+
+    public void actionPerformed(ActionEvent e){
+    }
+
+    public TempCov(){
+	this.setTitle("Fahrenheit/Celcius Converter");
+	this.setSize(500,500);
+	this.setLocation(100,100);
+	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
 
   public static double CtoF(double t){
     return (t * 9 / 5) + 32;
@@ -8,9 +20,8 @@ public class TempConv{
     return (t - 32) * 5 / 9;
   }
   
-  // public static void main(String[] args){
-  //   System.out.println(CtoF(-40.0)); // -40.0
-  //   System.out.println(CtoF(100.0)); // 212.0
-  //   System.out.println(FtoC(212.0)); // 100.0
-  // }
+    public static void main(String[] args){
+	TempConv w = new TempConv();
+	w.setVisible(true);
+    }
 }
