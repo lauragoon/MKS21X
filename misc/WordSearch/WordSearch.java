@@ -17,24 +17,55 @@ public class WordSearch {
   *@param col is the starting width of the WordSearch
   */
   public WordSearch(int rows, int cols, String filename) {
-    data = new char[rows][cols];
-    clear();
     wordsToAdd = new ArrayList<String>();
     wordsAdded = new ArrayList<String>();
     fileName = filename;
     seed = (int)(Math.random()*10000);
     randgen = new Random(seed);
     key = false;
+    data = new char[rows][cols];
+    clear();
+
+    try{
+      Scanner in = new Scanner(new File(filename));
+      while(in.hasNext()){
+        String word = in.next();
+        wordsToAdd.add(word);
+      }
+      fillWithWords();
+      fillRandomWords();
+    } catch(FileNotFoundException e){
+      System.out.println("invalid filename or path");
+      System.exit(1);
+    }
+    // printWordList();
   }
 
   public WordSearch(int rows, int cols, String filename, int userSeed, boolean showKey) {
-    data = new char[rows][cols];
-    clear();
     wordsToAdd = new ArrayList<String>();
     wordsAdded = new ArrayList<String>();
     fileName = filename;
     seed = userSeed;
+    randgen = new Random(seed);
     key = showKey;
+    data = new char[rows][cols];
+    clear();
+
+    try{
+      Scanner in = new Scanner(new File(filename));
+      while(in.hasNext()){
+        String w = in.next();
+        wordsToAdd.add(w);
+      }
+      fillWithWords();
+      if (!showKey){
+        fillRandomWords();
+      }
+    } catch(FileNotFoundException e){
+      System.out.println("invalid file or path");
+      System.exit(1);
+    }
+    // printWordList();
   }
 
   /**Set all values in the WordSearch to underscores '_'*/
@@ -55,30 +86,18 @@ public class WordSearch {
     String ret = "";
     for (int i = 0; i < data.length; i++) {
       for (int j = 0; j < data[i].length; j++) {
-        ret += data[i][j];
-        ret += " ";
+        if (j == data[i].length - 1){
+          ret += data[i][j] + "\n";
+        } else{
+          ret += data[i][j] + " ";
+        }
       }
-      ret = ret.substring(0, ret.length()-1);
-      ret += "\n";
     }
     return ret;
   }
 
-  public void loadWords() {
-    try {
-      Scanner in = new Scanner(new File(fileName));
-      while(in.hasNext()) {
-        String word = in.next();
-        wordsToAdd.add(word);
-      }
-    } catch(FileNotFoundException e) {
-      System.out.println("Invalid filename or path");
-      System.exit(1);
-    }
-  }
 
   public ArrayList printWordList() {
-    // return wordsToAdd;
     return wordsAdded;
   }
   public int printSeed() {
@@ -87,39 +106,38 @@ public class WordSearch {
 
 
   public boolean addWord(String word, int row, int col, int rowChange, int colChange) {
-    int len = word.length();
-    word = word.toUpperCase();
-
-    // if (row + (r*len) > data.length || row + (r*len) < 0 || col + (c*len) > data[0].length || col + (c*len) < 0) {
-    //   return false;
-    // }
-
-    try {
-      for (int i = 0; i < data.length; i++) {
-        if ((word.charAt(0) == data[row+(i*rowChange)][col+(i*colChange)]) && (data[row+(i*rowChange)][col+(i*colChange)] != '_')) {
-          return false;
+    boolean ret = true;
+    int rowCP = row;
+    int colCP = col;
+    char hi;
+    try{
+      for (int i = 0; i < word.length(); i++){
+        if((data[row+i][col] != '_') && (data[row+i][col] != word.charAt(i))){
+          ret = false;
         }
       }
-    } catch (ArrayIndexOutOfBoundsException e) {
-      System.out.println("Array Indx Out of Bounds");
-      return false;
-    }
-    // for (int i = 0; i < len; i++) {
-    //   data[rrow][ccol] = word.charAt(0);
-    //   word = word.substring(i);
-    //   rrow += rowChange;
-    //   ccol += colChange;
-    // }
-    while ( word.length() > 0) {
-      data[row][col] = word.charAt(0);
-      if (word.length() == 1) {
-        break;
+      for (int k = 0; k < word.length(); k++){
+        hi = data[rowCP][colCP];
+        rowCP += rowChange;
+        colCP += colChange;
       }
-      word = word.substring(1);
-      row += rowChange;
-      col += colChange;
+    }catch(ArrayIndexOutOfBoundsException e){
+      ret = false;
     }
-    return true;
+    if((rowChange == 0 && colChange == 0) ||
+    (rowChange == 0 && (colChange == 1 || colChange == -1) && word.length()+col > data[row].length)||
+    ((rowChange == 1 || rowChange == -1) && colChange == 0 && word.length()+row > data.length)||
+    ((rowChange == 1 || rowChange == -1) && (colChange == 1 || rowChange == -1) && (word.length()+row > data.length || word.length()+col > data[row].length))){
+      ret = false;
+    }
+    if (ret){
+      for (int j = 0; j < word.length(); j++){
+        data[row][col] = word.charAt(j);
+        row += rowChange;
+        col += colChange;
+      }
+    }
+    return ret;
   }
 
   public void fillRandomWords() {
@@ -134,44 +152,25 @@ public class WordSearch {
 
   public void fillWithWords() {
     int count = 0;
-    int initRow = randgen.nextInt(data.length);
-    int initCol = randgen.nextInt(data[initRow].length);
-    int r = randgen.nextInt(3)-1; //does this really do -1. 0. 1
-    int c;
-    if (r == 0) {
-      c = 1;
-    } else {
-      c = randgen.nextInt(3)-1;
-    }
-
-    for (int i = 0; i < wordsToAdd.size(); i++) {
-      while (count < 9000) {
-        if (addWord(wordsToAdd.get(i),initRow,initCol,r,c)) {
-          addWord(wordsToAdd.get(i),initRow,initCol,r,c);
-          wordsAdded.add(wordsToAdd.get(i));
-          wordsToAdd.remove(i);
+    boolean yes;
+    while (wordsToAdd.size() > 0){
+      yes = false;
+      while (count < 9000 && !yes){
+        if (addWord(wordsToAdd.get(0), randgen.nextInt(data.length), randgen.nextInt(data[0].length), (int)(randgen.nextInt(3) - 1), (int)(randgen.nextInt(3) - 1))){
+          // addWord(wordsToAdd.get(i), randgen.nextInt(data.length), randgen.nextInt(data[0].length), (int)(randgen.nextInt(3) - 1), (int)(randgen.nextInt(3) - 1));
+          wordsAdded.add(wordsToAdd.get(0));
+          wordsToAdd.remove(wordsToAdd.get(0));
+          yes = true;
         } else {
           count++;
-          initRow = randgen.nextInt(data.length);
-          initCol = randgen.nextInt(data[initRow].length);
-          r = randgen.nextInt(3)-1;
-          if (r == 0) {
-            c = 1;
-          } else {
-            c = randgen.nextInt(3)-1;
-          }
-          if (count >= 9000) {
-            System.out.println("Error: words dont fit");
-            System.exit(1);
-          }
+        }
+        if (count >= 9000){
+          System.out.println("words dont fit error");
         }
       }
     }
-
-    if (!key) {
-      fillRandomWords();
-    }
   }
+
 
   public static void main(String[] args) {
     // System.out.println("Random Seed Num: " + seed);
@@ -195,15 +194,15 @@ public class WordSearch {
           }
         }
         WordSearch puzz = new WordSearch(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Filename, Seed, Key);
-        puzz.loadWords();
-        puzz.fillWithWords();
+        // puzz.loadWords();
+        // puzz.fillWithWords();
         System.out.println(puzz.toString());
         System.out.println(puzz.printWordList());
         System.out.println("Seed Num: " + puzz.printSeed());
       } else {
         WordSearch puzz = new WordSearch(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Filename);
-        puzz.loadWords();
-        puzz.fillWithWords();
+        // puzz.loadWords();
+        // puzz.fillWithWords();
         System.out.println(puzz.toString());
         System.out.println(puzz.printWordList());
         System.out.println("Seed Num: " + puzz.printSeed());
