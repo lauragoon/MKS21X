@@ -55,13 +55,10 @@ public class Sorts{
     }
 
 
-    // public static void main(String[] args){
-    //  int[] test = {3,5,3,2,10,2,333,4,56,4,365};
-    //	insertionSort(test);
-    //	System.out.println(Arrays.toString(test));
-    //	int[] test2 = {};
-    //	insertionSort(test2);
-    //	System.out.println(Arrays.toString(test2));
-    // }
+    public static void main(String[] args){
+	int[] test = {3,5,3,2,10,2,333,4,56,4,365};
+	bubbleSort(test);
+	System.out.println(Arrays.toString(test));
+    }
 
 }
