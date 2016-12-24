@@ -37,57 +37,6 @@ public class Barcode implements Comparable<Barcode>{
     return sum;
   }
 
-<<<<<<< HEAD
-  // postcondition: convert bar string to num string
-  public String toZip(Sting zip){
-      String ret = "";
-      for (int i = 0; i < zip.length(); i++) {
-	  switch (zip[i]){
-	      case
-	  }
-      }
-  }
-
-  // helper function!
-  // postcondition: convert num string to bar string
-  public String toCode(String num){
-    String ret = "";
-    for (int i = 0; i < num.length(); i++) {
-
-    switch (num[i]){
-    case "1":
-        ret+ = ":::||";
-        break;
-    case "2":
-        ret+ = "::|:|";
-        break;
-    case "3":
-        ret+ = "::||:";
-        break;
-    case "4":
-        ret+= ":|::|";
-        break;
-    case "5":
-        ret+= ":|:|:";
-        break;
-    case "6":
-        ret+= ":||::";
-        break;
-    case "7":
-        ret+= "|:::|";
-        break;
-    case "8":
-        ret+= "|::|:";
-        break;
-    case "9":
-        ret += "|:|::";
-        break;
-    case "0":
-        ret += "||:::";
-        break;
-    default:
-        break;
-=======
   public static String toCode(String zip){
     if (zip.length() != 5){
       throw new IllegalArgumentException("Invalid length");
@@ -101,7 +50,6 @@ public class Barcode implements Comparable<Barcode>{
     int sum = 0;
     for (int i = 0; i < zip.length(); i++) {
       sum += Character.getNumericValue(zip.charAt(i));
->>>>>>> 352c340cdf22f2175c7d5dd2c2ad4f4195578107
     }
     int check = sum%10;
     zip += Integer.toString(check);
@@ -146,60 +94,13 @@ public class Barcode implements Comparable<Barcode>{
   public String toString(){
     String digit = Integer.toString(_checkDigit);
     String zip_ = _zip + digit;
-<<<<<<< HEAD
-    //for (int i = 0; i < zip_.length(); i++){
-      //code += zip_.substring(i,i+1);
-      //code += convert(zip_.substring(i,i+1));
-    //}
-    code = toBar(zip_);
-    return zip_ + "  " + "|" + code + "|";
-=======
     String code = toCode(_zip);
     return zip_ + " " + code;
->>>>>>> 352c340cdf22f2175c7d5dd2c2ad4f4195578107
   }
 
   public int compareTo(Barcode other){
     return (_zip + Integer.toString(_checkDigit)).compareTo(other._zip + Integer.toString(other._checkDigit));
   }
 
-  public static void main(String args[]){
-    //
-    //toZip TESTS
-    //
-    System.out.println("\ntoZip TESTS");
-    System.out.println(Barcode.toZip(Barcode.toCode("99999"))); //99999
-
-    //exceptions for toZip()
-    try{
-      Barcode.toZip("|:|");
-    }catch(IllegalArgumentException e){
-      e.printStackTrace();//not correct length
-    }
-
-    try{
-      Barcode.toZip("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-    }catch(IllegalArgumentException e){
-      e.printStackTrace();//invalid guard rails
-    }
-
-    try{
-      Barcode.toZip("|eeeeeeeeeeeeeeeeeeeeeeeeeeeeee|");
-    }catch(IllegalArgumentException e){
-      e.printStackTrace();//invalid barcode characters
-    }
-
-    try{
-      Barcode.toZip("|||:::|::|::|::|:|:||||:|||::|:|");
-    }catch(IllegalArgumentException e){
-      e.printStackTrace();//encoded int invalid
-    }
-
-    try{
-      Barcode.toZip("|||:::|::|::|::|:|:|::::|||::|||");
-    }catch(IllegalArgumentException e){
-      e.printStackTrace();//invalid checkDigit
-    }
-  }
 
 }
